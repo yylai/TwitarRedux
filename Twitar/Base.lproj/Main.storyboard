@@ -29,14 +29,65 @@
                                 <state key="normal" title="Log in with Twitter">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="onLoginButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LKS-L1-hme"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="loginButton" destination="0eS-2g-E6c" id="PC4-Ka-gyk"/>
+                        <segue destination="fhz-Fx-Kog" kind="presentation" identifier="loginSegue" id="wjO-U9-B7H"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="24.800000000000001" y="35.532233883058474"/>
+            <point key="canvasLocation" x="-423" y="38"/>
+        </scene>
+        <!--Time Line View Controller-->
+        <scene sceneID="8Ul-kF-Gxi">
+            <objects>
+                <viewController id="rf9-ac-vck" customClass="TimeLineViewController" customModule="Twitar" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ihq-dK-ftf"/>
+                        <viewControllerLayoutGuide type="bottom" id="EC8-6G-fU0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="l4c-VF-vzp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Nbx-C5-JzA">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="678"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="VQh-pz-8Cb"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gmk-63-Hjd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1401" y="37"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="77W-Ci-kiy">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fhz-Fx-Kog" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2yi-Ru-gHC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rf9-ac-vck" kind="relationship" relationship="rootViewController" id="j73-r8-tLs"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qH4-Uo-uja" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="462" y="37"/>
         </scene>
     </scenes>
 </document>
