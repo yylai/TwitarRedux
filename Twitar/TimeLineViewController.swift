@@ -11,6 +11,9 @@ import UIKit
 class TimeLineViewController: UIViewController {
 
     var tweets: [Tweet]!
+    @IBOutlet weak var logOutButton: UIBarButtonItem!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +36,10 @@ class TimeLineViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func onLogoutButton(_ sender: Any) {
+        
+        TwitterClient.sharedInstance.logout()
+    }
 
     /*
     // MARK: - Navigation

@@ -45,7 +45,7 @@
             </objects>
             <point key="canvasLocation" x="-423" y="38"/>
         </scene>
-        <!--Time Line View Controller-->
+        <!--Twitter-->
         <scene sceneID="8Ul-kF-Gxi">
             <objects>
                 <viewController id="rf9-ac-vck" customClass="TimeLineViewController" customModule="Twitar" customModuleProvider="target" sceneMemberID="viewController">
@@ -65,7 +65,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="VQh-pz-8Cb"/>
+                    <navigationItem key="navigationItem" title="Twitter" id="VQh-pz-8Cb">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="rbo-sJ-oHm">
+                            <connections>
+                                <action selector="onLogoutButton:" destination="rf9-ac-vck" id="pck-KD-6rB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="logOutButton" destination="rbo-sJ-oHm" id="BEe-nK-Rft"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gmk-63-Hjd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -74,7 +83,7 @@
         <!--Navigation Controller-->
         <scene sceneID="77W-Ci-kiy">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fhz-Fx-Kog" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TweetsNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="fhz-Fx-Kog" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="2yi-Ru-gHC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
