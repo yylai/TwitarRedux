@@ -7,28 +7,50 @@
 //
 
 import UIKit
+import MBProgressHUD
 
-class TimeLineViewController: UIViewController {
+class TimeLineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var tweets: [Tweet]!
     @IBOutlet weak var logOutButton: UIBarButtonItem!
+    @IBOutlet weak var timeLineTableView: UITableView!
     
     
+    var refresh: UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        TwitterClient.sharedInstance.homeTimeLine(success: { (tweets: [Tweet]) in
-            self.tweets = tweets
-            
-            for tweet in self.tweets {
-                print(tweet.text!)
-            }
-        }, failure: {(error: Error) in
-            print("errR")
-        })
+        // Initialize a UIRefreshControl
+        refresh = UIRefreshControl()
+        refresh.addTarget(self, action: #selector(self.refreshControlAction(refreshControl:)), for: .valueChanged)
+        timeLineTableView.insertSubview(refresh, at: 0)
+        
+        timeLineTableView.dataSource = self
+        timeLineTableView.delegate = self
+        timeLineTableView.rowHeight = UITableViewAutomaticDimension
+        timeLineTableView.estimatedRowHeight = 120
+        
+        TwitterClient.sharedInstance.homeTimeLine(success: successLoad, failure: failLoad)
+    }
+    
+    func successLoad(tweets: [Tweet]) {
+        MBProgressHUD.hide(for: self.view, animated: true)
+        refresh.endRefreshing()
+        print("done refreshing")
+        self.tweets = tweets
+        self.timeLineTableView.reloadData()
+    }
+    
+    func failLoad(error: Error) {
+        MBProgressHUD.hide(for: self.view, animated: true)
+        print("Error loading timeline: \(error.localizedDescription)")
+    }
+    
+    func refreshControlAction(refreshControl: UIRefreshControl) {
+        TwitterClient.sharedInstance.homeTimeLine(success: successLoad, failure: failLoad)
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,6 +61,22 @@ class TimeLineViewController: UIViewController {
     @IBAction func onLogoutButton(_ sender: Any) {
         
         TwitterClient.sharedInstance.logout()
+    }
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tweets != nil {
+            return tweets.count
+        } else {
+            return 0
+        }
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = timeLineTableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
+        
+        cell.tweet = tweets[indexPath.row]
+        
+        return cell
     }
 
     /*
