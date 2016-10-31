@@ -9,12 +9,11 @@
 import UIKit
 import MBProgressHUD
 
-class TimeLineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TimeLineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TweetCellDelegate, ComposeViewControllerDelegate {
 
     var tweets: [Tweet]!
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     @IBOutlet weak var timeLineTableView: UITableView!
-    @IBOutlet weak var timeSinceLabel: UILabel!
     
     
     var refresh: UIRefreshControl!
@@ -75,6 +74,7 @@ class TimeLineViewController: UIViewController, UITableViewDataSource, UITableVi
         let cell = timeLineTableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
         
         cell.tweet = tweets[indexPath.row]
+        cell.delegate = self
         
         return cell
     }
@@ -84,6 +84,9 @@ class TimeLineViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if id == "composeSegue" {
            //prep compose segue if any
+            //ComposeViewControllerDelegate
+            let composeViewController = segue.destination as! ComposeViewController
+            composeViewController.delegate = self
         }
         
         if id == "detailsSegue" {
@@ -97,15 +100,18 @@ class TimeLineViewController: UIViewController, UITableViewDataSource, UITableVi
         
         
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func reply(tweetCell: TweetCell, replyTweet: Tweet) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ComposeViewController") as! ComposeViewController
+        vc.isReply = true
+        vc.replyTweet = replyTweet
+        
+        //in_reply_to_status_id
+        self.navigationController?.pushViewController(vc, animated: true)
     }
-    */
 
+    func posted() {
+        TwitterClient.sharedInstance.homeTimeLine(success: successLoad, failure: failLoad)
+    }
 }

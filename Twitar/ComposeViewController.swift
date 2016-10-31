@@ -8,6 +8,10 @@
 
 import UIKit
 
+@objc protocol ComposeViewControllerDelegate {
+    @objc optional func posted()
+}
+
 class ComposeViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var profileImageView: UIImageView!
@@ -23,6 +27,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     
     var isReply: Bool = false;
     var replyTweet: Tweet?
+    var delegate: ComposeViewControllerDelegate?
     
     
     override func viewDidLoad() {
@@ -80,14 +85,17 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         } else {
             TwitterClient.sharedInstance.postTweet(tweet: tweetTextView.text, success: postSuccess, failure: postFail)            
         }
+        
     }
     
     func replySuccess() {
+        delegate?.posted?()
         self.navigationController!.popToRootViewController(animated: true)
         
     }
     
     func postSuccess() {
+        delegate?.posted?()
         self.navigationController!.popViewController(animated: true)
     }
     

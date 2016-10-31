@@ -9,6 +9,10 @@
 import UIKit
 import AFNetworking
 
+@objc protocol TweetCellDelegate {
+    @objc optional func reply(tweetCell: TweetCell, replyTweet: Tweet)
+}
+
 class TweetCell: UITableViewCell {
 
     
@@ -19,6 +23,11 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var tweetTextLabel: UILabel!
     @IBOutlet weak var retweetLabel: UILabel!
     @IBOutlet weak var favLabel: UILabel!
+    @IBOutlet weak var replyImageView: UIImageView!
+    @IBOutlet weak var retweetImageView: UIImageView!
+    @IBOutlet weak var likeImageView: UIImageView!
+    
+    var delegate: TweetCellDelegate?
     
     
     var tweet: Tweet! {
@@ -56,6 +65,53 @@ class TweetCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        let replyTapGestureRecognizer = UITapGestureRecognizer(target:self, action: #selector(self.replyTapped))
+        replyImageView.isUserInteractionEnabled = true
+        replyImageView.addGestureRecognizer(replyTapGestureRecognizer)
+        
+        let retweetTapGestureRecognizer = UITapGestureRecognizer(target:self, action: #selector(self.retweetTapped))
+        retweetImageView.isUserInteractionEnabled = true
+        retweetImageView.addGestureRecognizer(retweetTapGestureRecognizer)
+        
+        let likeTapGestureRecognizer = UITapGestureRecognizer(target:self, action: #selector(self.likeTapped))
+        likeImageView.isUserInteractionEnabled = true
+        likeImageView.addGestureRecognizer(likeTapGestureRecognizer)
+        
+    }
+    
+    func replyTapped(img: AnyObject)
+    {
+        delegate?.reply?(tweetCell: self, replyTweet: tweet)
+    }
+    
+    func likeTapped(img: AnyObject)
+    {
+        TwitterClient.sharedInstance.like(tweetId: tweet.id, success: likeSuccess, failure: likeFailed)
+        
+    }
+    
+    func likeSuccess() {
+        favLabel.text = String(tweet.favCount + 1)
+    }
+    
+    func likeFailed(error: Error) {
+        print("like failed: \(error.localizedDescription)")
+    }
+    
+    func retweetTapped(img: AnyObject)
+    {
+        TwitterClient.sharedInstance.retweet(tweetId: tweet.id, success: retweetSuccess, failure: retweetFailed)
+        //POST https://api.twitter.com/1.1/statuses/retweet/243149503589400576.json
+    }
+    
+    func retweetSuccess() {
+        retweetLabel.text = String(tweet.retweetCount + 1)
+        
+    }
+    
+    func retweetFailed(error: Error) {
+        print("retweet failed: \(error.localizedDescription)")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
