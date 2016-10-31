@@ -14,6 +14,7 @@ class TimeLineViewController: UIViewController, UITableViewDataSource, UITableVi
     var tweets: [Tweet]!
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     @IBOutlet weak var timeLineTableView: UITableView!
+    @IBOutlet weak var timeSinceLabel: UILabel!
     
     
     var refresh: UIRefreshControl!
@@ -79,24 +80,10 @@ class TimeLineViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let cell = sender as! UITableViewCell
-//        let indexPath = movieTableView.indexPath(for: cell)
-//        
-//        var movie: NSDictionary?
-//        if isSearching {
-//            movie = filteredMovies![indexPath!.row]
-//        } else {
-//            movie = movies![indexPath!.row]
-//        }
-//        
-//        let detailViewController = segue.destination as! DetailViewController
-//        
-//        detailViewController.movie = movie
         let id = segue.identifier!
         
         if id == "composeSegue" {
-            print("start compose segue")
-            
+           //prep compose segue if any
         }
         
         if id == "detailsSegue" {

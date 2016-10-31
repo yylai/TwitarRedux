@@ -17,6 +17,8 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var timeSinceLabel: UILabel!
     @IBOutlet weak var tweetTextLabel: UILabel!
+    @IBOutlet weak var retweetLabel: UILabel!
+    @IBOutlet weak var favLabel: UILabel!
     
     
     var tweet: Tweet! {
@@ -24,8 +26,30 @@ class TweetCell: UITableViewCell {
             profileImageView.setImageWith(tweet.profileUrl!)
             nameLabel.text = tweet.name!
             screenNameLabel.text = tweet.screenName!
-            timeSinceLabel.text = "123m"
+            let formatter = DateFormatter()
+            formatter.dateStyle = .short
+        
+            
+            let interval = -tweet.timeStamp!.timeIntervalSinceNow
+            let seconds = Int(interval.rounded(.towardZero))
+            let minutes = Int((interval / 60).rounded(.towardZero))
+            let hours = Int((interval / 3600).rounded(.towardZero))
+            
+            if seconds <= 60 {
+                timeSinceLabel.text = "\(seconds)s"
+            } else if minutes <= 60 {
+                timeSinceLabel.text = "\(minutes)m"
+            } else if hours <= 23 {
+                timeSinceLabel.text = "\(hours)h"
+            } else {
+                 timeSinceLabel.text = formatter.string(from: tweet.timeStamp!)
+            }
+            
             tweetTextLabel.text = tweet.text!
+            
+            retweetLabel.text = String(tweet.retweetCount)
+            favLabel.text = String(tweet.favCount)
+            
         }
     }
     

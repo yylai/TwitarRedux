@@ -19,6 +19,8 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var replyImageView: UIImageView!
     @IBOutlet weak var retweetImageView: UIImageView!
     @IBOutlet weak var likeImageView: UIImageView!
+    @IBOutlet weak var retweetCountLabel: UILabel!
+    @IBOutlet weak var likeCountLabel: UILabel!
     
     
     
@@ -33,6 +35,8 @@ class DetailsViewController: UIViewController {
         nameLabel.text = tweet.name!
         screenNameLabel.text = tweet.screenName!
         tweetLabel.text = tweet.text!
+        retweetCountLabel.text = String(tweet.retweetCount)
+        likeCountLabel.text = String(tweet.favCount)
         
         let formatter = DateFormatter()
         formatter.dateStyle = .short
@@ -68,13 +72,12 @@ class DetailsViewController: UIViewController {
     
     func likeTapped(img: AnyObject)
     {
-        print("like")
         TwitterClient.sharedInstance.like(tweetId: tweet.id, success: likeSuccess, failure: likeFailed)
         
     }
     
     func likeSuccess() {
-        print("like success")
+        likeCountLabel.text = String(tweet.favCount + 1)
     }
     
     func likeFailed(error: Error) {
@@ -83,13 +86,13 @@ class DetailsViewController: UIViewController {
     
     func retweetTapped(img: AnyObject)
     {
-        print("retweet")
         TwitterClient.sharedInstance.retweet(tweetId: tweet.id, success: retweetSuccess, failure: retweetFailed)
         //POST https://api.twitter.com/1.1/statuses/retweet/243149503589400576.json
     }
     
     func retweetSuccess() {
-        print("retweeted")
+        retweetCountLabel.text = String(tweet.retweetCount + 1)
+        
     }
     
     func retweetFailed(error: Error) {

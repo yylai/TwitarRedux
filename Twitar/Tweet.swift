@@ -20,13 +20,14 @@ class Tweet: NSObject {
     var name: String?
     var screenName: String?
     var id: String
-    
+
     
     init(data: NSDictionary) {
         text = data["text"] as? String
         retweetCount = data["retweet_count"] as? Int ?? 0
         favCount = data["favorite_count"] as? Int ?? 0
         id = data["id_str"] as! String
+        
         
         let timeStampStr = data["created_at"] as? String
         
@@ -43,9 +44,10 @@ class Tweet: NSObject {
         }
         
         if let url = user?["profile_image_url_https"] as? String {
-            print("profile url: \(url)")
             profileUrl = URL(string: url)
         }
+        
+        
         
         
     }
