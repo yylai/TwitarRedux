@@ -19,7 +19,12 @@ class User: NSObject {
     
     init(data: NSDictionary) {
         name = data["name"] as? String
-        screenName = data["screen_name"] as? String
+        if let sn = data["screen_name"] as? String {
+            screenName = "@\(sn)"
+        }
+
+        
+        
         let profileURLStr = data["profile_image_url_https"] as? String
         
         if let url = profileURLStr {

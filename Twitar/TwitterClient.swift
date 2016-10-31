@@ -40,6 +40,19 @@ class TwitterClient: BDBOAuth1SessionManager {
         
     }
     
+    func postTweet(tweet: String, success: @escaping () -> (), failure: @escaping (Error) -> ()) {
+        
+        let parameters: [String : AnyObject] = ["status": tweet as AnyObject]
+        
+        post("1.1/statuses/update.json", parameters: parameters, progress: nil, success: { (session: URLSessionDataTask, sender: Any?) in
+            success()
+            
+        }, failure: { (session: URLSessionDataTask?, error: Error) in
+            failure(error)
+        })
+        
+    }
+    
     func handleOpenUrl(url: URL) {
         
         let requestToken = BDBOAuth1Credential(queryString: url.query)

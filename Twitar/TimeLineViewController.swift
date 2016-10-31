@@ -39,7 +39,6 @@ class TimeLineViewController: UIViewController, UITableViewDataSource, UITableVi
     func successLoad(tweets: [Tweet]) {
         MBProgressHUD.hide(for: self.view, animated: true)
         refresh.endRefreshing()
-        print("done refreshing")
         self.tweets = tweets
         self.timeLineTableView.reloadData()
     }
@@ -77,6 +76,37 @@ class TimeLineViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.tweet = tweets[indexPath.row]
         
         return cell
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        let cell = sender as! UITableViewCell
+//        let indexPath = movieTableView.indexPath(for: cell)
+//        
+//        var movie: NSDictionary?
+//        if isSearching {
+//            movie = filteredMovies![indexPath!.row]
+//        } else {
+//            movie = movies![indexPath!.row]
+//        }
+//        
+//        let detailViewController = segue.destination as! DetailViewController
+//        
+//        detailViewController.movie = movie
+        let id = segue.identifier!
+        
+        if id == "composeSegue" {
+            print("start compose segue")
+            
+        }
+        
+        if id == "detailsSegue" {
+            print("start details segue")
+            let cell = sender as! TweetCell
+            let indexPath = timeLineTableView.indexPath(for: cell)!
+            //let tweet = tweets[indexPath.row]
+        }
+        
+        
     }
 
     /*
