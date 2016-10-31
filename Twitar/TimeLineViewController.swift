@@ -103,7 +103,9 @@ class TimeLineViewController: UIViewController, UITableViewDataSource, UITableVi
             print("start details segue")
             let cell = sender as! TweetCell
             let indexPath = timeLineTableView.indexPath(for: cell)!
-            //let tweet = tweets[indexPath.row]
+            let tweet = tweets[indexPath.row]
+            let detailsViewController = segue.destination as! DetailsViewController
+            detailsViewController.tweet = tweet
         }
         
         

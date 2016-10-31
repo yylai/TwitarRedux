@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationCenter.default.addObserver(forName: NSNotification.Name(TwitterClient.userDidLogoutNotification), object: nil, queue: OperationQueue.main, using: {(notify: Notification) -> Void in
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateInitialViewController()
+            
             self.window?.rootViewController = vc
             
         })

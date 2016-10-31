@@ -40,6 +40,45 @@ class TwitterClient: BDBOAuth1SessionManager {
         
     }
     
+    func like(tweetId id: String, success: @escaping () -> (), failure: @escaping (Error) -> ()) {
+        let parameters: [String : AnyObject] = ["id": id as AnyObject]
+        //https://api.twitter.com/1.1/favorites/create.json?id=243138128959913986
+        post("1.1/favorites/create.json", parameters: parameters, progress: nil, success: { (session: URLSessionDataTask, sender: Any?) in
+            success()
+            
+        }, failure: { (session: URLSessionDataTask?, error: Error) in
+            failure(error)
+        })
+        
+    }
+    
+    func retweet(tweetId id: String, success: @escaping () -> (), failure: @escaping (Error) -> ()) {
+        
+        //POST https://api.twitter.com/1.1/statuses/retweet/243149503589400576.json
+        let url = "1.1/statuses/retweet/\(id).json"
+        
+        post(url, parameters: nil, progress: nil, success: { (session: URLSessionDataTask, sender: Any?) in
+            success()
+            
+        }, failure: { (session: URLSessionDataTask?, error: Error) in
+            failure(error)
+        })
+    }
+    
+    func reply(tweet: String, id: String, success: @escaping () -> (), failure: @escaping (Error) -> ()) {
+        
+        let parameters: [String : AnyObject] = ["status": tweet as AnyObject, "in_reply_to_status_id": id as AnyObject]
+        
+        post("1.1/statuses/update.json", parameters: parameters, progress: nil, success: { (session: URLSessionDataTask, sender: Any?) in
+            success()
+            
+        }, failure: { (session: URLSessionDataTask?, error: Error) in
+            failure(error)
+        })
+        
+    }
+    
+    
     func postTweet(tweet: String, success: @escaping () -> (), failure: @escaping (Error) -> ()) {
         
         let parameters: [String : AnyObject] = ["status": tweet as AnyObject]

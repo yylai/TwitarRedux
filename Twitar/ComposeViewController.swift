@@ -15,8 +15,14 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var charRemainingLabel: UILabel!
+    @IBOutlet weak var replyNameLabel: UILabel!
+    
+    
     
     let MAX_CHAR: Int = 140
+    
+    var isReply: Bool = false;
+    var replyTweet: Tweet?
     
     
     override func viewDidLoad() {
@@ -30,7 +36,16 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         nameLabel.text = user.name!
         screenNameLabel.text = user.screenName!
         
-        charRemainingLabel.text = String(MAX_CHAR)
+        
+        if isReply {
+            replyNameLabel.isHidden = false
+            replyNameLabel.text = "In reply to \(replyTweet!.name!)"
+            tweetTextView.text = "\(replyTweet!.screenName!) "
+            charRemainingLabel.text = String(MAX_CHAR - replyTweet!.screenName!.characters.count)
+        } else {
+            replyNameLabel.isHidden = true
+            charRemainingLabel.text = String(MAX_CHAR)
+        }
         
         tweetTextView.delegate = self
         tweetTextView.becomeFirstResponder()
@@ -59,7 +74,16 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     
     
     @IBAction func onTweetButton(_ sender: Any) {
-        TwitterClient.sharedInstance.postTweet(tweet: tweetTextView.text, success: postSuccess, failure: postFail)
+        
+        if isReply {
+            TwitterClient.sharedInstance.reply(tweet: tweetTextView.text, id: replyTweet!.id, success: replySuccess, failure: postFail)
+        } else {
+            TwitterClient.sharedInstance.postTweet(tweet: tweetTextView.text, success: postSuccess, failure: postFail)            
+        }
+    }
+    
+    func replySuccess() {
+        self.navigationController!.popToRootViewController(animated: true)
         
     }
     
