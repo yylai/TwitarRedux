@@ -11,6 +11,7 @@ import AFNetworking
 
 @objc protocol TweetCellDelegate {
     @objc optional func reply(tweetCell: TweetCell, replyTweet: Tweet)
+    @objc optional func profile(tweetCell: TweetCell, profileTweet: Tweet)
 }
 
 class TweetCell: UITableViewCell {
@@ -66,6 +67,10 @@ class TweetCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
+        let profileTapRecognizer = UITapGestureRecognizer(target:self, action: #selector(self.profileTapped))
+        profileImageView.isUserInteractionEnabled = true
+        profileImageView.addGestureRecognizer(profileTapRecognizer)
+        
         let replyTapGestureRecognizer = UITapGestureRecognizer(target:self, action: #selector(self.replyTapped))
         replyImageView.isUserInteractionEnabled = true
         replyImageView.addGestureRecognizer(replyTapGestureRecognizer)
@@ -78,6 +83,10 @@ class TweetCell: UITableViewCell {
         likeImageView.isUserInteractionEnabled = true
         likeImageView.addGestureRecognizer(likeTapGestureRecognizer)
         
+    }
+    
+    func profileTapped(img: AnyObject) {
+       delegate?.profile?(tweetCell: self, profileTweet: tweet)
     }
     
     func replyTapped(img: AnyObject)

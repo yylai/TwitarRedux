@@ -16,14 +16,15 @@ class User: NSObject {
     var profileUrl: URL?
     var tagLine: String?
     var data: NSDictionary?
+    var numOfFollowers: Int?
+    var numOfTweets: Int?
+    var numOfFollowing: Int?
     
     init(data: NSDictionary) {
         name = data["name"] as? String
         if let sn = data["screen_name"] as? String {
             screenName = "@\(sn)"
         }
-
-        
         
         let profileURLStr = data["profile_image_url_https"] as? String
         
@@ -32,6 +33,11 @@ class User: NSObject {
         }
         
         tagLine = data["description"] as? String
+        
+        numOfTweets = data["statuses_count"] as? Int ?? 0
+        numOfFollowers = data["followers_count"] as? Int ?? 0
+        numOfFollowing = data["friends_count"] as? Int ?? 0
+        
         
         self.data = data
     }

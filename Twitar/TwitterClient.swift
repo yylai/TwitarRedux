@@ -114,6 +114,25 @@ class TwitterClient: BDBOAuth1SessionManager {
     }
     
     
+    func userTimeLine(screenName: String, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+        let parameters: [String : AnyObject] = ["screen_name": screenName as AnyObject]
+        
+        print("user time line for id \(screenName)")
+        
+        get("1.1/statuses/user_timeline.json", parameters: parameters, progress: nil,
+            success: {(task: URLSessionDataTask, response: Any?) -> Void in
+                
+                let dictionaries = response as! [NSDictionary]
+                
+                let tweets = Tweet.tweetsWithArray(data: dictionaries)
+                success(tweets)
+                
+        }, failure: {(task: URLSessionDataTask?, error: Error) -> Void in
+            failure(error)
+        })
+    }
+    
+    
     func homeTimeLine(success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
         get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil,
             success: {(task: URLSessionDataTask, response: Any?) -> Void in
@@ -126,6 +145,25 @@ class TwitterClient: BDBOAuth1SessionManager {
         }, failure: {(task: URLSessionDataTask?, error: Error) -> Void in
             failure(error)
         })
+    }
+    
+    func showUser(screenName: String, success: @escaping (User) -> (), failure: @escaping (Error) -> ()) {
+        let parameters: [String : AnyObject] = ["screen_name": screenName as AnyObject]
+        
+        get("1.1/users/show.json", parameters: parameters, progress: nil,
+            success: {(task: URLSessionDataTask, response: Any?) -> Void in
+                
+                let userDict = response as! NSDictionary
+                let user = User(data: userDict)
+                print("name: \(user.name!)")
+                
+                success(user)
+                
+                
+        }, failure: {(task: URLSessionDataTask?, error: Error) -> Void in
+            failure(error)
+        })
+        
     }
     
     func currentAccount(success: @escaping (User) -> (), failure: @escaping (Error?) -> ()) {

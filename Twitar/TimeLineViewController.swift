@@ -15,7 +15,6 @@ class TimeLineViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     @IBOutlet weak var timeLineTableView: UITableView!
     
-    
     var refresh: UIRefreshControl!
     
     override func viewDidLoad() {
@@ -109,6 +108,15 @@ class TimeLineViewController: UIViewController, UITableViewDataSource, UITableVi
         
         //in_reply_to_status_id
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func profile(tweetCell: TweetCell, profileTweet: Tweet) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        vc.profileTweet = profileTweet
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+
     }
 
     func posted() {

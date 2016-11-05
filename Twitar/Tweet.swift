@@ -19,6 +19,8 @@ class Tweet: NSObject {
     var profileUrl: URL?
     var name: String?
     var screenName: String?
+    var screenNameNoSymbol: String?
+    
     var id: String
 
     
@@ -40,6 +42,7 @@ class Tweet: NSObject {
         let user = data["user"] as? NSDictionary
         name = user?["name"] as? String
         if let sn = user?["screen_name"] as? String {
+            screenNameNoSymbol = sn
             screenName = "@\(sn)"
         }
         
