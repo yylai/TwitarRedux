@@ -52,6 +52,76 @@
             </objects>
             <point key="canvasLocation" x="-423" y="38"/>
         </scene>
+        <!--Hamburger View Controller-->
+        <scene sceneID="daU-kY-TGL">
+            <objects>
+                <viewController storyboardIdentifier="HamburgerViewController" id="fac-Cb-Gua" customClass="HamburgerViewController" customModule="Twitar" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yZV-36-Mvx"/>
+                        <viewControllerLayoutGuide type="bottom" id="Cz6-n7-l8s"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zCI-kw-ae0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jsR-uT-CoX" userLabel="MenuView">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9VM-Gj-BNQ" userLabel="ContentView">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="dTN-bp-Pay" appends="YES" id="J2r-ah-bmy"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9VM-Gj-BNQ" firstAttribute="leading" secondItem="zCI-kw-ae0" secondAttribute="leading" id="1XI-2T-agC"/>
+                            <constraint firstAttribute="trailing" secondItem="jsR-uT-CoX" secondAttribute="trailing" id="9IF-ey-vX2"/>
+                            <constraint firstItem="9VM-Gj-BNQ" firstAttribute="width" secondItem="zCI-kw-ae0" secondAttribute="width" id="OdF-oW-IUI"/>
+                            <constraint firstItem="jsR-uT-CoX" firstAttribute="top" secondItem="yZV-36-Mvx" secondAttribute="bottom" id="SUD-Ab-DpA"/>
+                            <constraint firstItem="jsR-uT-CoX" firstAttribute="leading" secondItem="zCI-kw-ae0" secondAttribute="leading" id="ber-Ye-ELT"/>
+                            <constraint firstItem="Cz6-n7-l8s" firstAttribute="top" secondItem="9VM-Gj-BNQ" secondAttribute="bottom" id="esF-JC-Jfx"/>
+                            <constraint firstItem="9VM-Gj-BNQ" firstAttribute="top" secondItem="yZV-36-Mvx" secondAttribute="bottom" id="jv5-qr-hzd"/>
+                            <constraint firstItem="Cz6-n7-l8s" firstAttribute="top" secondItem="jsR-uT-CoX" secondAttribute="bottom" id="zM3-Lq-0Sf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="contentView" destination="9VM-Gj-BNQ" id="Cw0-4B-48F"/>
+                        <outlet property="leftMarginContentConstraint" destination="1XI-2T-agC" id="u29-qG-agN"/>
+                        <outlet property="menuView" destination="jsR-uT-CoX" id="oyf-Tv-CNI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lm1-nD-3B0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="dTN-bp-Pay">
+                    <connections>
+                        <action selector="onPan:" destination="fac-Cb-Gua" id="dpR-x7-Yhe"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1415.2" y="-700.29985007496259"/>
+        </scene>
+        <!--Menu View Controller-->
+        <scene sceneID="TG4-nR-qe5">
+            <objects>
+                <viewController storyboardIdentifier="MenuViewController" id="M9K-4P-VTk" customClass="MenuViewController" customModule="Twitar" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dj8-fB-DjI"/>
+                        <viewControllerLayoutGuide type="bottom" id="KeR-HS-81t"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ujQ-7U-aYa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f45-Fl-UGD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2250" y="-694"/>
+        </scene>
         <!--Twitter-->
         <scene sceneID="8Ul-kF-Gxi">
             <objects>
@@ -573,7 +643,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H1f-hi-sxT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1168.8" y="859.52023988005999"/>
+            <point key="canvasLocation" x="1502" y="795"/>
         </scene>
         <!--Details View Controller-->
         <scene sceneID="Kzf-Pn-ANA">
@@ -717,7 +787,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ito-f1-d5g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2256.8000000000002" y="798.35082458770626"/>
+            <point key="canvasLocation" x="2257" y="795"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="77W-Ci-kiy">
