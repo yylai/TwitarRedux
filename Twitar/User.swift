@@ -19,6 +19,10 @@ class User: NSObject {
     var numOfFollowers: Int?
     var numOfTweets: Int?
     var numOfFollowing: Int?
+    var profileBgUrl: URL?
+    var profileBGColor: String?
+    var bannerURL: URL?
+    
     
     init(data: NSDictionary) {
         name = data["name"] as? String
@@ -32,12 +36,24 @@ class User: NSObject {
             profileUrl = URL(string: url)
         }
         
+        let profileBGURLStr = data["profile_background_image_url_https"] as? String
+        if let url = profileBGURLStr {
+            print("bg: \(url)")
+            profileBgUrl = URL(string: url)
+        }
+        
+        let bannerURLStr = data["profile_banner_url"] as? String
+        if let url = bannerURLStr {
+            bannerURL = URL(string: url)
+        }
+        
         tagLine = data["description"] as? String
+        
+        profileBGColor = data["profile_background_color"] as? String
         
         numOfTweets = data["statuses_count"] as? Int ?? 0
         numOfFollowers = data["followers_count"] as? Int ?? 0
         numOfFollowing = data["friends_count"] as? Int ?? 0
-        
         
         self.data = data
     }

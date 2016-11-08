@@ -51,6 +51,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         numOfTweetsLabel.text = String(user.numOfTweets!)
         numOfFollowingLabel.text = String(user.numOfFollowing!)
         numOfFollowers.text = String(user.numOfFollowers!)
+        if let bgURL = user.profileBgUrl {
+            backgroundImage.setImageWith(bgURL)
+        }
+        
     }
     
     func successLoad(tweets: [Tweet]) {
