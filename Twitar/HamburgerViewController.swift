@@ -14,6 +14,39 @@ class HamburgerViewController: UIViewController {
     
     @IBOutlet weak var leftMarginContentConstraint: NSLayoutConstraint!
     
+    var menuViewController: MenuViewController! {
+        didSet {
+            view.layoutIfNeeded()
+            
+            
+            menuViewController.willMove(toParentViewController: self)
+            menuView.addSubview(menuViewController.view)
+            menuViewController.didMove(toParentViewController: self)
+            
+        }
+    }
+    
+    var cvController: UIViewController! {
+        didSet(oldContentVC) {
+            view.layoutIfNeeded()
+            
+            if oldContentVC != nil {
+                oldContentVC.willMove(toParentViewController: nil)
+                oldContentVC.view.removeFromSuperview()
+                oldContentVC.didMove(toParentViewController: nil)
+            }
+            
+            
+            cvController.willMove(toParentViewController: self)
+            contentView.addSubview(cvController.view)
+            cvController.didMove(toParentViewController: self)
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                self.leftMarginContentConstraint.constant = 0
+                self.view.layoutIfNeeded()
+            })
+        }
+    }
     
     var originalLeftMargin: CGFloat!
     
@@ -36,10 +69,12 @@ class HamburgerViewController: UIViewController {
         if sender.state == .began {
             
             originalLeftMargin = leftMarginContentConstraint.constant
+            print("original left: \(originalLeftMargin)")
             
         } else if sender.state == .changed {
             
             leftMarginContentConstraint.constant = originalLeftMargin + translation.x
+            print("new left: \(leftMarginContentConstraint.constant)")
             
         } else if sender.state == .ended {
             
@@ -58,15 +93,5 @@ class HamburgerViewController: UIViewController {
         }
         
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

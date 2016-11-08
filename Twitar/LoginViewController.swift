@@ -25,6 +25,8 @@ class LoginViewController: UIViewController {
     
     @IBAction func onLoginButton(_ sender: Any) {
         
+        print("login")
+        
         TwitterClient.sharedInstance.login(success: {
             print("i have logged in")
             self.performSegue(withIdentifier: "loginSegue", sender: nil)

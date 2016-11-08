@@ -16,6 +16,9 @@ class TimeLineViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var timeLineTableView: UITableView!
     
     var refresh: UIRefreshControl!
+    var originalLeftMargin: CGFloat!
+    
+    var isMentionsTimeline: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +35,16 @@ class TimeLineViewController: UIViewController, UITableViewDataSource, UITableVi
         timeLineTableView.rowHeight = UITableViewAutomaticDimension
         timeLineTableView.estimatedRowHeight = 120
         
-        TwitterClient.sharedInstance.homeTimeLine(success: successLoad, failure: failLoad)
+        if isMentionsTimeline {
+            self.navigationItem.title = "Mentions"
+            TwitterClient.sharedInstance.mentions(success: successLoad, failure: failLoad)
+        } else {
+            self.navigationItem.title = "Twitter"
+            TwitterClient.sharedInstance.homeTimeLine(success: successLoad, failure: failLoad)
+            
+        }
+        
+        
     }
     
     func successLoad(tweets: [Tweet]) {
@@ -122,4 +134,5 @@ class TimeLineViewController: UIViewController, UITableViewDataSource, UITableVi
     func posted() {
         TwitterClient.sharedInstance.homeTimeLine(success: successLoad, failure: failLoad)
     }
+    
 }

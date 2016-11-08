@@ -182,6 +182,20 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func mentions(success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+        get("1.1/statuses/mentions_timeline.json", parameters: nil, progress: nil,
+            success: {(task: URLSessionDataTask, response: Any?) -> Void in
+                
+                let dictionaries = response as! [NSDictionary]
+                
+                let tweets = Tweet.tweetsWithArray(data: dictionaries)
+                success(tweets)
+                
+        }, failure: {(task: URLSessionDataTask?, error: Error) -> Void in
+            failure(error)
+        })
+    }
+    
     func logout() {
         User.currentUser = nil
         deauthorize()
